@@ -1,25 +1,20 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const mysql = require("sync-mysql");
+const mysql = require('sync-mysql');
 
-var client = new mysql({
-  host: "localhost",
-  user: "root",
-  password: "gachon654321",
-  database: "luciddb",
-});
+const client = require('../../utils/mysql');
 
-router.get("/", (req, res) => {
-  res.render("chinsung_login", {
-    title: "Login",
+router.get('/', (req, res) => {
+  res.render('chinsung_login', {
+    title: 'Login',
   });
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   var userId = req.body.userId;
   var userPw = req.body.userPw;
 
-  var user = "";
+  var user = '';
 
   // 리퀘스트에서 아이피 가져오기
   //var userIP = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
@@ -37,11 +32,11 @@ router.post("/", (req, res) => {
     user = item.userNum;
   });
 
-  if (user != "") {
-    res.cookie("userNum", user);
-    res.redirect("/web/main/index");
+  if (user != '') {
+    res.cookie('userNum', user);
+    res.redirect('/web/main/index');
   } else {
-    res.redirect("/web/login");
+    res.redirect('/web/login');
   }
 });
 

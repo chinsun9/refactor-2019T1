@@ -1,0 +1,13 @@
+version: '3'
+services:
+  database:
+    build: ./database
+    ports:
+      - '3306:3306'
+  backend:
+    build: ./backend
+    ports:
+      - '65002:65002'
+    environment:
+      - NODE_ENV=skip_ganglion
+      - DBHOST=database

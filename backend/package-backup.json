@@ -11,13 +11,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@bartando/rpi-ws281x-neopixel": "^1.0.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "http": "0.0.0",
+    "jade": "^1.11.0",
     "mysql": "^2.17.1",
+    "node-wiring-pi": "0.0.5",
     "request": "^2.88.0",
     "sync-mysql": "^3.0.1"
   }

@@ -1,19 +1,14 @@
-const fs = require("fs");
-const express = require("express");
+const fs = require('fs');
+const express = require('express');
 const router = express.Router();
-const mysql = require("sync-mysql");
-const ejs = require("ejs");
+const mysql = require('sync-mysql');
+const ejs = require('ejs');
 
-var client = new mysql({
-  host: "localhost",
-  user: "root",
-  password: "gachon654321",
-  database: "luciddb",
-});
+const client = require('../../utils/mysql');
 
 // 웹 편집 위해 빠른 로그인 없이 보이기
-router.get("/", (req, res) => {
-  res.render("chinsung_about.ejs");
+router.get('/', (req, res) => {
+  res.render('chinsung_about.ejs');
 });
 
 // router.get('/', (req, res) => {
@@ -33,11 +28,11 @@ router.get("/", (req, res) => {
 // 	}
 // });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   var userId = req.body.userId;
   var userPw = req.body.userPw;
 
-  var user = "";
+  var user = '';
 
   var results = client.query(
     'select userNum from luciddb.USER where userId = "' +
@@ -51,10 +46,10 @@ router.post("/", (req, res) => {
     user = item.userNum;
   });
 
-  if (user != "") {
-    res.redirect("/web/main/index");
+  if (user != '') {
+    res.redirect('/web/main/index');
   } else {
-    res.redirect("/web/login");
+    res.redirect('/web/login');
   }
 });
 

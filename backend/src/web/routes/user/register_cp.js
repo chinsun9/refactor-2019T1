@@ -1,18 +1,13 @@
-const fs = require("fs");
-const express = require("express");
+const fs = require('fs');
+const express = require('express');
 const router = express.Router();
-const mysql = require("sync-mysql");
-const ejs = require("ejs");
+const mysql = require('sync-mysql');
+const ejs = require('ejs');
 
-var client = new mysql({
-  host: "localhost",
-  user: "root",
-  password: "gachon654321",
-  database: "luciddb",
-});
+const client = require('../../utils/mysql');
 
-router.get("/", (req, res) => {
-  res.render("chinsung_register");
+router.get('/', (req, res) => {
+  res.render('chinsung_register');
 
   // fs.readFile('web/web/chinsung_register.ejs', 'utf8', (err, data) => {
   //     res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -23,7 +18,7 @@ router.get("/", (req, res) => {
   // });
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   var userId = req.body.userId;
   var userPw = req.body.userPw;
   var userName = req.body.userName;
@@ -35,7 +30,7 @@ router.post("/", (req, res) => {
 
   console.log(req.body);
 
-  var user = "";
+  var user = '';
 
   //1. 빈값이 있는지 체크
   //2. id 중복확인
@@ -62,7 +57,7 @@ router.post("/", (req, res) => {
     } else {
       // 모두 통과하면 db에 저장하기
 
-      var results2 = client.query("select count(*) from luciddb.USER");
+      var results2 = client.query('select count(*) from luciddb.USER');
       console.log(results2.toString());
       results2++;
 
@@ -72,9 +67,9 @@ router.post("/", (req, res) => {
   }
 
   if (byeFlag) {
-    res.redirect("/web/user/register");
+    res.redirect('/web/user/register');
   } else {
-    res.redirect("/main");
+    res.redirect('/main');
   }
 });
 

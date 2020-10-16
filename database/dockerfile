@@ -1,0 +1,8 @@
+FROM mariadb:10.3
+
+ENV MYSQL_USER mysql_user
+ENV MYSQL_PASSWORD 1234
+ENV MYSQL_ROOT_PASSWORD 1234
+ENV MYSQL_DATABASE luciddb
+
+COPY ./scripts/ /docker-entrypoint-initdb.d/

@@ -1,43 +1,38 @@
-const fs = require("fs");
-const express = require("express");
+const fs = require('fs');
+const express = require('express');
 const router = express.Router();
-const mysql = require("sync-mysql");
-const ejs = require("ejs");
+const mysql = require('sync-mysql');
+const ejs = require('ejs');
 
-var client = new mysql({
-  host: "localhost",
-  user: "root",
-  password: "gachon654321",
-  database: "luciddb",
-});
+const client = require('../../utils/mysql');
 
 var serviceOrder = new Array();
 var myString = [
-  "lieTimeService",
-  "getSleepTimeService",
-  "wakeUpTimeService",
-  "remSleepService",
-  "stage12SleepService",
-  "stage34SleepService",
-  "totalSleepTimeService",
-  "sleepEfficiencyService",
-  "dailySleepTimeService",
+  'lieTimeService',
+  'getSleepTimeService',
+  'wakeUpTimeService',
+  'remSleepService',
+  'stage12SleepService',
+  'stage34SleepService',
+  'totalSleepTimeService',
+  'sleepEfficiencyService',
+  'dailySleepTimeService',
 ];
 var myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 // 웹 편집 위해 빠른 로그인 없이 보이기
-router.get("/", (req, res) => {
-  if (typeof req.cookies.userNum == "undefined") {
-    console.log(new Date() + "] 쿠키없는 접근");
+router.get('/', (req, res) => {
+  if (typeof req.cookies.userNum == 'undefined') {
+    console.log(new Date() + '] 쿠키없는 접근');
 
-    res.render("chinsung_404.ejs", {
-      msg: "Session expiration",
+    res.render('chinsung_404.ejs', {
+      msg: 'Session expiration',
     });
     return;
   }
 
-  let myResults = "";
+  let myResults = '';
   myResults = client.query(
-    "select * from SERVICEEOGORDER where userNum=" + req.cookies.userNum
+    'select * from SERVICEEOGORDER where userNum=' + req.cookies.userNum
   );
 
   myResults.forEach((item, index) => {
@@ -54,18 +49,18 @@ router.get("/", (req, res) => {
 
   console.log(myStringOrder.toString());
 
-  let tempName = "";
+  let tempName = '';
   myResults = client.query(
-    "select * from USER where userNum = " + req.cookies.userNum
+    'select * from USER where userNum = ' + req.cookies.userNum
   );
   myResults.forEach((item, index) => {
     tempName = item.userName;
   });
 
-  res.render("chinsung_setting", {
+  res.render('chinsung_setting', {
     orderCard: myStringOrder,
     orderList: myString,
-    title: "Setting",
+    title: 'Setting',
     userName: tempName,
   });
 
@@ -103,39 +98,39 @@ router.get("/", (req, res) => {
 // 	}
 // });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   serviceOrder = req.body.arr;
   console.log(serviceOrder);
   let myResults = client.query(
-    "delete from SERVICEEOGORDER where userNum = " + req.cookies.userNum
+    'delete from SERVICEEOGORDER where userNum = ' + req.cookies.userNum
   );
   myResults = client.query(
-    "insert into SERVICEEOGORDER values (" +
+    'insert into SERVICEEOGORDER values (' +
       req.cookies.userNum +
-      ", " +
+      ', ' +
       serviceOrder[0] +
-      ", " +
+      ', ' +
       serviceOrder[1] +
-      ", " +
+      ', ' +
       serviceOrder[2] +
-      ", " +
+      ', ' +
       serviceOrder[3] +
-      ", " +
+      ', ' +
       serviceOrder[4] +
-      ", " +
+      ', ' +
       serviceOrder[5] +
-      ", " +
+      ', ' +
       serviceOrder[6] +
-      ", " +
+      ', ' +
       serviceOrder[7] +
-      ", " +
+      ', ' +
       serviceOrder[8] +
-      ")"
+      ')'
   );
 
   //디비에 배열 저장!
 
-  res.redirect("/web/setting/index");
+  res.redirect('/web/setting/index');
 });
 
 // router.post('/', (req, res) => {

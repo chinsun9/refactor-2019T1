@@ -1,15 +1,10 @@
-const fs = require("fs");
-const express = require("express");
+const fs = require('fs');
+const express = require('express');
 const router = express.Router();
-const mysql = require("sync-mysql");
-const ejs = require("ejs");
+const mysql = require('sync-mysql');
+const ejs = require('ejs');
 
-var client = new mysql({
-  host: "localhost",
-  user: "root",
-  password: "gachon654321",
-  database: "luciddb",
-});
+const client = require('../../utils/mysql');
 
 // 필요한 정보. 사용자 정보 + 뇌파 등록 여부
 
@@ -50,34 +45,34 @@ var client = new mysql({
 function date_to_str(format) {
   var year = format.getFullYear();
   var month = format.getMonth() + 1;
-  if (month < 10) month = "0" + month;
+  if (month < 10) month = '0' + month;
   var date = format.getDate();
-  if (date < 10) date = "0" + date;
+  if (date < 10) date = '0' + date;
 
-  return year + "-" + month + "-" + date;
+  return year + '-' + month + '-' + date;
 }
 
-router.get("/", (req, res) => {
-  if (typeof req.cookies.userNum == "undefined") {
-    console.log(new Date() + "] 쿠키없는 접근");
+router.get('/', (req, res) => {
+  if (typeof req.cookies.userNum == 'undefined') {
+    console.log(new Date() + '] 쿠키없는 접근');
 
-    res.render("chinsung_404.ejs", {
-      msg: "Session expiration",
+    res.render('chinsung_404.ejs', {
+      msg: 'Session expiration',
     });
     return;
   }
 
   var results = client.query(
-    "select * from USER where userNum = " + req.cookies.userNum
+    'select * from USER where userNum = ' + req.cookies.userNum
   );
   // console.log(results[0]);
 
-  var userId = "";
-  var userPw = "";
-  var userName = "";
-  var userEmail = "";
+  var userId = '';
+  var userPw = '';
+  var userName = '';
+  var userEmail = '';
   var userEmailStatus = 0;
-  var userBirth = "";
+  var userBirth = '';
   var userSex = 0;
   var userArea = 0;
 
@@ -93,7 +88,7 @@ router.get("/", (req, res) => {
   });
 
   let sleepResult2 = client.query(
-    "select * from LOGINEOGFP1 where userNum = " + req.cookies.userNum
+    'select * from LOGINEOGFP1 where userNum = ' + req.cookies.userNum
   );
 
   let ddata9 = 0; //되냐
@@ -103,12 +98,12 @@ router.get("/", (req, res) => {
   });
 
   var dateTest = new Date(userBirth);
-  console.log("디비에서 가져온 원본 날짜 :" + dateTest);
-  console.log("디비에서 가져온 원본 날짜+ :" + date_to_str(dateTest));
+  console.log('디비에서 가져온 원본 날짜 :' + dateTest);
+  console.log('디비에서 가져온 원본 날짜+ :' + date_to_str(dateTest));
 
   userBirth = date_to_str(dateTest);
 
-  console.log("웹에 보내지는 날짜 :" + userBirth);
+  console.log('웹에 보내지는 날짜 :' + userBirth);
   // fs.readFile('web/web/chinsung_profile_edit.ejs', 'utf8', (err, data) => {
   // 	res.writeHead(200, {'Content-Type': 'text/html'});
   // 	res.write('<meta charset=utf8>');
@@ -123,8 +118,8 @@ router.get("/", (req, res) => {
   // 		userArea: userArea
   // 	}));
   // });
-  res.render("chinsung_profile_edit", {
-    title: "Profile_edit",
+  res.render('chinsung_profile_edit', {
+    title: 'Profile_edit',
 
     userId: userId,
     userPw: userPw,
@@ -157,11 +152,11 @@ router.get("/", (req, res) => {
 // 	res.redirect('/web/login');
 // });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   var userId = req.body.userId;
   var userPw = req.body.userPw;
   console.log(req.body);
-  var user = "";
+  var user = '';
 
   var results = client.query(
     'select userNum from luciddb.USER where userId = "' +
@@ -186,9 +181,9 @@ router.post("/", (req, res) => {
       req.body.userBirth +
       '", userSex = ' +
       req.body.userSex +
-      ", userArea = " +
+      ', userArea = ' +
       req.body.userArea +
-      " where userNum = " +
+      ' where userNum = ' +
       req.cookies.userNum
   );
   var results = client.query(
@@ -202,13 +197,13 @@ router.post("/", (req, res) => {
       req.body.userBirth +
       '", userSex = ' +
       req.body.userSex +
-      ", userArea = " +
+      ', userArea = ' +
       req.body.userArea +
-      " where userNum = " +
+      ' where userNum = ' +
       req.cookies.userNum
   );
 
-  res.redirect("/web/main/index");
+  res.redirect('/web/main/index');
   // if(user != "") {
   // 	res.cookie('userNum', user);
   // 	res.redirect('/web/main/index');
