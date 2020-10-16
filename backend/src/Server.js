@@ -90,5 +90,5 @@ app.use('/', webIndex);
 
 // ipv4 형식으로 ip보기위해 '0.0.0.0' 추가
 app.listen(65002, '0.0.0.0', () => {
-  console.log('server running at 65002');
+  console.log('server running at  http://localhost:65002');
 });
