@@ -38,7 +38,7 @@ if (process.env.NODE_ENV !== 'skip_ganglion') {
 
 app.set('views', './src/web/views');
 app.set('view engine', 'ejs');
-app.use(express.static('./web/web/img')); // 이미지 경로 설정  //출처: https://alexband.tistory.com/16 [GoodBye World]
+app.use(express.static('./src/web/public')); // 이미지 경로 설정  //출처: https://alexband.tistory.com/16 [GoodBye World]
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
