@@ -31,7 +31,6 @@ function sleepService(req, callback) {
   let sleepResult = client.query(
     'select * from SERVICEEOG where userNum = ' + req.cookies.userNum
   );
-  //let sleepResult = client.query("select * from SERVICEEOG where userNum = " + 1);
 
   sleepResult.forEach((item, index) => {
     serviceTime[index] = item.serviceTime;
@@ -42,34 +41,6 @@ function sleepService(req, callback) {
     stage12Time[index] = item.stage12Time;
     stage34Time[index] = item.stage34Time;
   });
-
-  // var date = new Date();
-  // console.log(date);
-  // date = new Date(date.toString());
-  // console.log(date);
-  //console.log((date.getTime() - date1.getTime()) / 100);
-  //console.log(date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());;
-
-  //let test = client.query("insert into temp values('" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "')");
-
-  // console.log(serviceTime);
-  // console.log(lieTime);
-  // console.log(getSleepTime);
-  // console.log(wakeUpTime);
-  // console.log(remStageTime);
-  // console.log(stage12Time);
-  // console.log(stage34Time);
-
-  // serviceTime.forEach((item, index) => {
-  // 	serviceTime[index] = item.split('T');
-  // 	console.log(serviceTime[index][0]);
-  // });
-  //
-  // lieTime.forEach((item, index) => {
-  // 	lieTime[index] = item.split('.');
-  //
-  // 	console.log(lieTime[index][0]);
-  // });
 
   let dlabel = [];
   let ddata0 = []; //누운 시간
@@ -137,8 +108,6 @@ function sleepService(req, callback) {
   wakeUpTime.forEach((item, index) => {
     ddata7[index] = (ddata5[index] / (ddata4[index] + ddata5[index])) * 100;
   });
-
-  // console.log(ddata7);
 
   var dataObject = {
     dindex: 0,
@@ -224,7 +193,6 @@ function sleepService(req, callback) {
 
   callback(dataArr);
 }
-
 //메인에서 필요한 정보
 // 카드 순서 정보, 알림, 사용자 정보
 
@@ -274,6 +242,7 @@ router.get('/', (req, res) => {
   // console.log(ddata9);
 
   sleepService(req, (dataArr) => {
+    console.log(myStringOrder);
     res.render('chinsung_main.ejs', {
       title: 'Main',
       orderCard: myStringOrder,
@@ -282,7 +251,6 @@ router.get('/', (req, res) => {
       checkData: ddata9,
     });
   });
-  // console.log(myStringOrder);
 });
 
 router.post('/', (req, res) => {
