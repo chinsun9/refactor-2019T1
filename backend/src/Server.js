@@ -16,7 +16,7 @@ const webTool = require('./web/routes/about/tool.js');
 const webSetting = require('./web/routes/setting/index.js');
 const webPwChange = require('./web/routes/profile/change.js');
 
-if (process.env.NODE_ENV === 'web_only') {
+if (process.env.NODE_ENV !== 'skip_ganglion') {
   const registerToken = require('./ganglion/register/index.js');
   const gangalionLogin = require('./ganglion/login/login.js');
   const gangalionLoginChsTest = require('./ganglion/login/chsLoginTest.js');
