@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
@@ -10,15 +10,15 @@ const vendor = require('./web/web/vendor.js');
 
 const registerToken = require('./ganglion/register/index.js');
 const weblogin = require('./web/login.js');
-const webregister = require('./web/user/register.js');
-const weblogout = require('./web/user/logout.js');
-const webMain = require('./web/main/index.js');
-const webProfile = require('./web/profile/index.js');
-const webRegisterEOG = require('./web/profile/register.js');
-const webAbout = require('./web/about/index.js');
-const webTool = require('./web/about/tool.js');
-const webSetting = require('./web/setting/index.js');
-const webPwChange = require('./web/profile/change.js');
+const webregister = require('./web/routes/user/register.js');
+const weblogout = require('./web/routes/user/logout.js');
+const webMain = require('./web/routes/main/index.js');
+const webProfile = require('./web/routes/profile/index.js');
+const webRegisterEOG = require('./web/routes/profile/register.js');
+const webAbout = require('./web/routes/about/index.js');
+const webTool = require('./web/routes/about/tool.js');
+const webSetting = require('./web/routes/setting/index.js');
+const webPwChange = require('./web/routes/profile/change.js');
 const webIndex = require('./web/test.js');
 
 const gangalionLogin = require('./ganglion/login/login.js');
@@ -29,19 +29,20 @@ const ganglinRegisterChsTest = require('./ganglion/register/chsRegisterTest.js')
 const ganglionAnalysis = require('./ganglion/analysis/index.js');
 const ganglionAnalysisChsTest = require('./ganglion/analysis/chsTest.js');
 
-app.set('views', './web/web');	// 기본 디렉터리 바꾸기.
-app.set("view engine", "ejs");
-app.use(express.static('./web/web/img'));   // 이미지 경로 설정  //출처: https://alexband.tistory.com/16 [GoodBye World]
+app.set('views', './web/web'); // 기본 디렉터리 바꾸기.
+app.set('view engine', 'ejs');
+app.use(express.static('./web/web/img')); // 이미지 경로 설정  //출처: https://alexband.tistory.com/16 [GoodBye World]
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({
-	secret: 'secret key',
-	resave: false,
-	saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: 'secret key',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(cookieParser());
-
 
 app.use('/ganglion/index', registerToken);
 
@@ -65,7 +66,6 @@ app.use('/web/setting/css', css);
 app.use('/web/setting/js', js);
 app.use('/web/setting/vendor', vendor);
 
-
 app.use('/web/login', weblogin);
 app.use('/web/user/register', webregister);
 app.use('/web/user/logout', weblogout);
@@ -83,15 +83,12 @@ app.use('/ganglion/register', ganglinRegister);
 app.use('/ganglion/register2', ganglinRegisterChsTest);
 app.use('/ganglion/analysis/index', ganglionAnalysis);
 
-app.use('/ganglion/chsLoginTest', gangalionLoginChsTest);											//chs;
-app.use('/ganglion/analysis/index2', ganglionAnalysisChsTest);	//chs;  바로 로그아웃해서 디비에 저장하는 url
+app.use('/ganglion/chsLoginTest', gangalionLoginChsTest); //chs;
+app.use('/ganglion/analysis/index2', ganglionAnalysisChsTest); //chs;  바로 로그아웃해서 디비에 저장하는 url
 
-
-
-app.use('/',webIndex)
-
+app.use('/', webIndex);
 
 // ipv4 형식으로 ip보기위해 '0.0.0.0' 추가
-app.listen(65002, '0.0.0.0',() => {
-	console.log("server running at 65002");
+app.listen(65002, '0.0.0.0', () => {
+  console.log('server running at 65002');
 });
