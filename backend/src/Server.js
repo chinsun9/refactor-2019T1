@@ -4,10 +4,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
-const css = require('./web/web/css.js');
-const js = require('./web/web/js.js');
-const vendor = require('./web/web/vendor.js');
-
 const weblogin = require('./web/routes/user/login.js');
 const webIndex = require('./web/routes/test.js');
 const webregister = require('./web/routes/user/register.js');
@@ -54,26 +50,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-
-//css, js, vendor 설정
-app.use('/web/css', css);
-app.use('/web/js', js);
-app.use('/web/vendor', vendor);
-app.use('/web/user/css', css);
-app.use('/web/user/js', js);
-app.use('/web/user/vendor', vendor);
-app.use('/web/main/css', css);
-app.use('/web/main/js', js);
-app.use('/web/main/vendor', vendor);
-app.use('/web/profile/css', css);
-app.use('/web/profile/js', js);
-app.use('/web/profile/vendor', vendor);
-app.use('/web/about/css', css);
-app.use('/web/about/js', js);
-app.use('/web/about/vendor', vendor);
-app.use('/web/setting/css', css);
-app.use('/web/setting/js', js);
-app.use('/web/setting/vendor', vendor);
 
 app.use('/web/login', weblogin);
 app.use('/web/user/register', webregister);
