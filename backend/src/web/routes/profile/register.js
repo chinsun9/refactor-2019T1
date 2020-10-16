@@ -2,9 +2,6 @@ const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
-const ejs = require('ejs');
-const request = require('request');
-
 const client = require('../../utils/mysql');
 
 router.get('/', (req, res) => {
@@ -20,7 +17,6 @@ router.get('/', (req, res) => {
   var results = client.query(
     'select * from USER where userNum = ' + req.cookies.userNum
   );
-  // console.log(results[0]);
 
   var userName = '';
 
@@ -32,27 +28,7 @@ router.get('/', (req, res) => {
     title: 'registerEOG',
     userName: userName,
   });
-  // fs.readFile('web/web/chinsung_registerEOG.ejs', 'utf8', (err, data) => {
-  // 	res.writeHead(200, {'Content-Type': 'text/html'});
-  // 	res.write('<meta charset=utf8>');
-  // 	res.end(ejs.render(data, {
-
-  // 	}));
-  // });
 });
-
-// router.get('/', (req, res) => {
-// 	var results = client.query('select * from USER where userNum = ' + req.cookies.userNum);
-// 	console.log(results[0]);
-
-// 	fs.readFile('web/web/chinsung_registerEOG.ejs', 'utf8', (err, data) => {
-// 		res.writeHead(200, {'Content-Type': 'text/html'});
-// 		res.write('<meta charset=utf8>');
-// 		res.end(ejs.render(data, {
-
-// 		}));
-// 	});
-// });
 
 router.post('/', (req, res) => {
   var token = req.body.token;

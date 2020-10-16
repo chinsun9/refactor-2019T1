@@ -1,8 +1,5 @@
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
-
-const ejs = require('ejs');
 
 const client = require('../../utils/mysql');
 
@@ -11,7 +8,6 @@ const client = require('../../utils/mysql');
 //사용자 카드 순서
 //각 카드 데이터 인덱스, 통계명, 라벨, 데이터
 var userName = '';
-var serviceOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 var myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 var dataArr = [];
@@ -239,7 +235,6 @@ router.get('/', (req, res) => {
   sleepResult2.forEach((item, index) => {
     ddata9 = item.userNum;
   });
-  // console.log(ddata9);
 
   sleepService(req, (dataArr) => {
     console.log(myStringOrder);

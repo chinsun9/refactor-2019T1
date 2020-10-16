@@ -1,8 +1,5 @@
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
-
-const ejs = require('ejs');
 
 const client = require('../../utils/mysql');
 
@@ -63,40 +60,7 @@ router.get('/', (req, res) => {
     title: 'Setting',
     userName: tempName,
   });
-
-  // console.log("get"+hello);
-  // if(hello.length==0){
-  // 	console.log("으악")
-
-  // 	hello=[0,1,2,3,4,5,6,7,8,9,10,11];
-  // }
-  // console.log("나는 get이야" + hello);
-
-  // fs.readFile('web/web/chinsung_setting.ejs', 'utf8', (err, data) => {
-  // 	res.writeHead(200, {'Content-Type': 'text/html'});
-  // 	res.write('<meta charset=utf8>');
-  // 	res.end(ejs.render(data, {
-  // 		orderCard: hello
-  // 	}));
-  // });
 });
-
-// router.get('/', (req, res) => {
-// 	if(req.cookies.userNum == null) {
-// 		res.redirect('/web/login');
-// 	}
-// 	else {
-
-// 	fs.readFile('web/web/chinsung_main.ejs', 'utf8', (err, data) => {
-// 		res.writeHead(200, {'Content-Type': 'text/html'});
-// 		res.write('<meta charset=utf8>');
-// 		res.end(ejs.render(data, {
-
-// 		}));
-// 	});
-
-// 	}
-// });
 
 router.post('/', (req, res) => {
   serviceOrder = req.body.arr;
@@ -132,25 +96,5 @@ router.post('/', (req, res) => {
 
   res.redirect('/web/setting/index');
 });
-
-// router.post('/', (req, res) => {
-// 	var userId = req.body.userId;
-// 	var userPw = req.body.userPw;
-
-// 	var user = "";
-
-// 	var results = client.query('select userNum from luciddb.USER where userId = "' + userId + '" and userPw = "' + userPw + '"');
-
-// 	results.forEach((item, index) => {
-// 		user = item.userNum;
-// 	});
-
-// 	if(user != "") {
-// 		res.redirect('/web/main/index');
-// 	}
-// 	else {
-// 		res.redirect('/web/login');
-// 	}
-// });
 
 module.exports = router;

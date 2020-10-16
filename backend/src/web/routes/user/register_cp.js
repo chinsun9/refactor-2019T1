@@ -1,21 +1,10 @@
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
-
-const ejs = require('ejs');
 
 const client = require('../../utils/mysql');
 
 router.get('/', (req, res) => {
   res.render('chinsung_register');
-
-  // fs.readFile('web/web/chinsung_register.ejs', 'utf8', (err, data) => {
-  //     res.writeHead(200, { 'Content-Type': 'text/html' });
-  //     res.write('<meta charset=utf8>');
-  //     res.end(ejs.render(data, {
-
-  //     }));
-  // });
 });
 
 router.post('/', (req, res) => {
@@ -60,9 +49,6 @@ router.post('/', (req, res) => {
       var results2 = client.query('select count(*) from luciddb.USER');
       console.log(results2.toString());
       results2++;
-
-      // var results3 = client.query('insert into luciddb.USER VALUES (' + results + ', "' + userId + '", "' + userPw + '", "' + userName + '", "' + userEmail + '", "' + userEmailStatus + '", ' + userBirth + ', ' + userSex + ', ' + userArea+ ')');
-      // console.log(results3.toString());
     }
   }
 

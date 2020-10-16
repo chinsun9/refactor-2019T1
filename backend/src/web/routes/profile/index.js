@@ -1,46 +1,6 @@
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
-
-const ejs = require('ejs');
-
 const client = require('../../utils/mysql');
-
-// 필요한 정보. 사용자 정보 + 뇌파 등록 여부
-
-//웹 편집위해 로그인 없이
-// router.get('/', (req, res) => {
-// 	var userId = "id";
-// 	var userPw = "pw";
-// 	var userName = "username";
-// 	var userEmail = "email";
-// 	var userEmailStatus = 1;
-// 	var userBirth = "961118";
-// 	var userSex = 0;	//남자일때 0
-// 	var userArea = 2;
-//
-// 	res.render('chinsung_profile_edit',{
-//
-// 		title: 'Profile_edit',
-//
-// 		userId: userId,
-// 		userPw: userPw,
-// 		userName: userName,
-// 		userEmail: userEmail,
-// 		userEmailStatus: userEmailStatus,
-// 		userBirth: userBirth,
-// 		userSex: userSex,
-// 		userArea: userArea
-// 	})
-//
-//
-// 	fs.readFile('web/web/chinsung_profile_edit.ejs', 'utf8', (err, data) => {
-// 		res.writeHead(200, {'Content-Type': 'text/html'});
-// 		res.write('<meta charset=utf8>');
-// 		res.end(ejs.render(data, {
-// 		}));
-// 	});
-// });
 
 function date_to_str(format) {
   var year = format.getFullYear();
@@ -104,20 +64,7 @@ router.get('/', (req, res) => {
   userBirth = date_to_str(dateTest);
 
   console.log('웹에 보내지는 날짜 :' + userBirth);
-  // fs.readFile('web/web/chinsung_profile_edit.ejs', 'utf8', (err, data) => {
-  // 	res.writeHead(200, {'Content-Type': 'text/html'});
-  // 	res.write('<meta charset=utf8>');
-  // 	res.end(ejs.render(data, {
-  // 		userId: userId,
-  // 		userPw: userPw,
-  // 		userName: userName,
-  // 		userEmail: userEmail,
-  // 		userEmailStatus: userEmailStatus,
-  // 		userBirth: userBirth,
-  // 		userSex: userSex,
-  // 		userArea: userArea
-  // 	}));
-  // });
+
   res.render('chinsung_profile_edit', {
     title: 'Profile_edit',
 
@@ -132,25 +79,6 @@ router.get('/', (req, res) => {
     checkData: ddata9,
   });
 });
-
-// router.post('/', (req, res) => {
-// 	var userName = req.body.userName;
-// 	var userEmail = req.body.userEmail;
-// 	var userEmailStatus = req.body.userEmailStatus;
-// 	var userBirth = req.body.userBirth;
-// 	var userSex = req.body.userSex;
-// 	var userArea = req.body.userArea;
-//
-//
-// 	console.log(userName)
-// 	console.log(userEmail)
-// 	console.log(userEmailStatus)
-// 	console.log(userBirth)
-// 	console.log(userSex)
-// 	console.log(userArea)
-//
-// 	res.redirect('/web/login');
-// });
 
 router.post('/', (req, res) => {
   var userId = req.body.userId;
@@ -204,13 +132,6 @@ router.post('/', (req, res) => {
   );
 
   res.redirect('/web/main/index');
-  // if(user != "") {
-  // 	res.cookie('userNum', user);
-  // 	res.redirect('/web/main/index');
-  // }
-  // else {
-  // 	res.redirect('/web/login');
-  // }
 });
 
 module.exports = router;

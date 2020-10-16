@@ -1,8 +1,5 @@
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
-
-const ejs = require('ejs');
 
 const client = require('../../utils/mysql');
 
@@ -10,13 +7,6 @@ router.get('/', (req, res) => {
   res.render('chinsung_register', {
     title: 'Register',
   });
-  // fs.readFile('web/web/chinsung_register.ejs', 'utf8', (err, data) => {
-  // 	res.writeHead(200, {'Content-Type': 'text/html'});
-  // 	res.write('<meta charset=utf8>');
-  // 	res.end(ejs.render(data, {
-
-  // 	}));
-  // });
 });
 
 router.post('/', (req, res) => {
