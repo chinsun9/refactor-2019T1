@@ -1,22 +1,16 @@
-const fs = require("fs");
-const express = require("express");
+const fs = require('fs');
+const express = require('express');
 const router = express.Router();
-const mysql = require("sync-mysql");
-const ejs = require("ejs");
 
-var client = new mysql({
-  host: "localhost",
-  user: "root",
-  // password: '1',
-  password: "gachon654321",
-  database: "luciddb",
-});
+const ejs = require('ejs');
+
+const client = require('../../utils/mysql');
 
 //필요한 값
 //사용자명
 //사용자 카드 순서
 //각 카드 데이터 인덱스, 통계명, 라벨, 데이터
-var userName = "";
+var userName = '';
 var serviceOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 var myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -35,7 +29,7 @@ function sleepService(req, callback) {
   let stage34Time = [];
 
   let sleepResult = client.query(
-    "select * from SERVICEEOG where userNum = " + req.cookies.userNum
+    'select * from SERVICEEOG where userNum = ' + req.cookies.userNum
   );
   //let sleepResult = client.query("select * from SERVICEEOG where userNum = " + 1);
 
@@ -91,12 +85,12 @@ function sleepService(req, callback) {
   serviceTime.forEach((item, index) => {
     item = new Date(item);
     var chsTemp = item.getMonth() + 1;
-    dlabel[index] = item.getFullYear() + "-" + chsTemp + "-" + item.getDate();
+    dlabel[index] = item.getFullYear() + '-' + chsTemp + '-' + item.getDate();
   });
 
   lieTime.forEach((item, index) => {
     ddata0[index] = parseFloat(
-      new Date(item).getHours() + "." + new Date(item).getMinutes()
+      new Date(item).getHours() + '.' + new Date(item).getMinutes()
     );
   });
 
@@ -109,7 +103,7 @@ function sleepService(req, callback) {
 
   wakeUpTime.forEach((item, index) => {
     ddata2[index] = parseFloat(
-      new Date(item).getHours() + "." + new Date(item).getMinutes()
+      new Date(item).getHours() + '.' + new Date(item).getMinutes()
     );
   });
 
@@ -148,7 +142,7 @@ function sleepService(req, callback) {
 
   var dataObject = {
     dindex: 0,
-    dname: "누운시간",
+    dname: '누운시간',
     dlabel: dlabel,
     ddata: ddata0,
   };
@@ -158,7 +152,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 1,
-    dname: "수면까지 걸린 시간",
+    dname: '수면까지 걸린 시간',
     dlabel: dlabel,
     ddata: ddata1,
   };
@@ -167,7 +161,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 2,
-    dname: "기상 시간",
+    dname: '기상 시간',
     dlabel: dlabel,
     ddata: ddata2,
   };
@@ -176,7 +170,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 3,
-    dname: "잡파 발생 횟수",
+    dname: '잡파 발생 횟수',
     dlabel: dlabel,
     ddata: ddata3,
   };
@@ -185,7 +179,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 4,
-    dname: "Stage1,2 수면 단계 시간",
+    dname: 'Stage1,2 수면 단계 시간',
     dlabel: dlabel,
     ddata: ddata4,
   };
@@ -194,7 +188,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 5,
-    dname: "Stage3,4 수면 단계 시간",
+    dname: 'Stage3,4 수면 단계 시간',
     dlabel: dlabel,
     ddata: ddata5,
   };
@@ -203,7 +197,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 6,
-    dname: "총 수면 시간",
+    dname: '총 수면 시간',
     dlabel: dlabel,
     ddata: ddata6,
   };
@@ -212,7 +206,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 7,
-    dname: "수면 효율",
+    dname: '수면 효율',
     dlabel: dlabel,
     ddata: ddata7,
   };
@@ -221,7 +215,7 @@ function sleepService(req, callback) {
 
   dataObject = {
     dindex: 8,
-    dname: "일일 수면 시간",
+    dname: '일일 수면 시간',
     dlabel: dlabel,
     ddata: ddata8,
   };
@@ -235,25 +229,25 @@ function sleepService(req, callback) {
 // 카드 순서 정보, 알림, 사용자 정보
 
 // 웹 편집 위해 빠른 로그인 없이 보이기
-router.get("/", (req, res) => {
-  if (typeof req.cookies.userNum == "undefined") {
-    console.log(new Date() + "] 쿠키없는 접근");
+router.get('/', (req, res) => {
+  if (typeof req.cookies.userNum == 'undefined') {
+    console.log(new Date() + '] 쿠키없는 접근');
 
-    res.render("chinsung_404.ejs", {
-      msg: "Session expiration",
+    res.render('chinsung_404.ejs', {
+      msg: 'Session expiration',
     });
     return;
   }
 
   let myResults = client.query(
-    "select * from USER where userNum = " + req.cookies.userNum
+    'select * from USER where userNum = ' + req.cookies.userNum
   );
   myResults.forEach((item, index) => {
     userName = item.userName;
   });
 
   myResults = client.query(
-    "select * from SERVICEEOGORDER where userNum=" + req.cookies.userNum
+    'select * from SERVICEEOGORDER where userNum=' + req.cookies.userNum
   );
 
   myResults.forEach((item, index) => {
@@ -269,7 +263,7 @@ router.get("/", (req, res) => {
   });
 
   let sleepResult2 = client.query(
-    "select * from LOGINEOGFP1 where userNum = " + req.cookies.userNum
+    'select * from LOGINEOGFP1 where userNum = ' + req.cookies.userNum
   );
 
   let ddata9 = 0; //되냐
@@ -280,8 +274,8 @@ router.get("/", (req, res) => {
   // console.log(ddata9);
 
   sleepService(req, (dataArr) => {
-    res.render("chinsung_main.ejs", {
-      title: "Main",
+    res.render('chinsung_main.ejs', {
+      title: 'Main',
       orderCard: myStringOrder,
       userName: userName,
       dataArr: JSON.stringify(dataArr),
@@ -291,11 +285,11 @@ router.get("/", (req, res) => {
   // console.log(myStringOrder);
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   var userId = req.body.userId;
   var userPw = req.body.userPw;
 
-  var user = "";
+  var user = '';
 
   var results = client.query(
     'select userNum from luciddb.USER where userId = "' +
@@ -309,10 +303,10 @@ router.post("/", (req, res) => {
     user = item.userNum;
   });
 
-  if (user != "") {
-    res.redirect("/web/main/index");
+  if (user != '') {
+    res.redirect('/web/main/index');
   } else {
-    res.redirect("/web/login");
+    res.redirect('/web/login');
   }
 });
 
