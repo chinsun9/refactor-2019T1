@@ -8,8 +8,8 @@ const css = require('./web/web/css.js');
 const js = require('./web/web/js.js');
 const vendor = require('./web/web/vendor.js');
 
-const registerToken = require('./ganglion/register/index.js');
-const weblogin = require('./web/login.js');
+const weblogin = require('./web/routes/user/login.js');
+const webIndex = require('./web/routes/test.js');
 const webregister = require('./web/routes/user/register.js');
 const weblogout = require('./web/routes/user/logout.js');
 const webMain = require('./web/routes/main/index.js');
@@ -19,8 +19,8 @@ const webAbout = require('./web/routes/about/index.js');
 const webTool = require('./web/routes/about/tool.js');
 const webSetting = require('./web/routes/setting/index.js');
 const webPwChange = require('./web/routes/profile/change.js');
-const webIndex = require('./web/test.js');
 
+const registerToken = require('./ganglion/register/index.js');
 const gangalionLogin = require('./ganglion/login/login.js');
 const gangalionLoginChsTest = require('./ganglion/login/chsLoginTest.js');
 const gangalionLoginTest = require('./ganglion/login/logintest.js');
