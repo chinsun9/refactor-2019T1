@@ -20,14 +20,25 @@ const webTool = require('./web/routes/about/tool.js');
 const webSetting = require('./web/routes/setting/index.js');
 const webPwChange = require('./web/routes/profile/change.js');
 
-const registerToken = require('./ganglion/register/index.js');
-const gangalionLogin = require('./ganglion/login/login.js');
-const gangalionLoginChsTest = require('./ganglion/login/chsLoginTest.js');
-const gangalionLoginTest = require('./ganglion/login/logintest.js');
-const ganglinRegister = require('./ganglion/register/register.js');
-const ganglinRegisterChsTest = require('./ganglion/register/chsRegisterTest.js');
-const ganglionAnalysis = require('./ganglion/analysis/index.js');
-const ganglionAnalysisChsTest = require('./ganglion/analysis/chsTest.js');
+if (process.env.NODE_ENV === 'web_only') {
+  const registerToken = require('./ganglion/register/index.js');
+  const gangalionLogin = require('./ganglion/login/login.js');
+  const gangalionLoginChsTest = require('./ganglion/login/chsLoginTest.js');
+  const gangalionLoginTest = require('./ganglion/login/logintest.js');
+  const ganglinRegister = require('./ganglion/register/register.js');
+  const ganglinRegisterChsTest = require('./ganglion/register/chsRegisterTest.js');
+  const ganglionAnalysis = require('./ganglion/analysis/index.js');
+  const ganglionAnalysisChsTest = require('./ganglion/analysis/chsTest.js');
+
+  app.use('/ganglion/index', registerToken);
+  app.use('/ganglion/login', gangalionLogin);
+  app.use('/ganglion/logintest', gangalionLoginTest);
+  app.use('/ganglion/register', ganglinRegister);
+  app.use('/ganglion/register2', ganglinRegisterChsTest);
+  app.use('/ganglion/analysis/index', ganglionAnalysis);
+  app.use('/ganglion/chsLoginTest', gangalionLoginChsTest); //chs;
+  app.use('/ganglion/analysis/index2', ganglionAnalysisChsTest); //chs;  바로 로그아웃해서 디비에 저장하는 url
+}
 
 app.set('views', './web/web'); // 기본 디렉터리 바꾸기.
 app.set('view engine', 'ejs');
@@ -43,8 +54,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-
-app.use('/ganglion/index', registerToken);
 
 //css, js, vendor 설정
 app.use('/web/css', css);
@@ -76,15 +85,6 @@ app.use('/web/profile/register', webRegisterEOG);
 app.use('/web/about/index', webAbout);
 app.use('/web/about/tool', webTool);
 app.use('/web/setting/index', webSetting);
-
-app.use('/ganglion/login', gangalionLogin);
-app.use('/ganglion/logintest', gangalionLoginTest);
-app.use('/ganglion/register', ganglinRegister);
-app.use('/ganglion/register2', ganglinRegisterChsTest);
-app.use('/ganglion/analysis/index', ganglionAnalysis);
-
-app.use('/ganglion/chsLoginTest', gangalionLoginChsTest); //chs;
-app.use('/ganglion/analysis/index2', ganglionAnalysisChsTest); //chs;  바로 로그아웃해서 디비에 저장하는 url
 
 app.use('/', webIndex);
 
