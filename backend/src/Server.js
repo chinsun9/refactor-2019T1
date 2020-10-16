@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'web_only') {
   app.use('/ganglion/analysis/index2', ganglionAnalysisChsTest); //chs;  바로 로그아웃해서 디비에 저장하는 url
 }
 
-app.set('views', './web/web'); // 기본 디렉터리 바꾸기.
+app.set('views', './src/web/web');
 app.set('view engine', 'ejs');
 app.use(express.static('./web/web/img')); // 이미지 경로 설정  //출처: https://alexband.tistory.com/16 [GoodBye World]
 
