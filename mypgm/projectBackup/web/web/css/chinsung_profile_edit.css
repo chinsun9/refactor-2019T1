@@ -1,0 +1,151 @@
+#content > div > div > form > div, #content > div > div > form > a {
+  max-width: 500px;
+  position: relative;
+  height: 60px;
+
+}
+
+#content > div > div > form > div:nth-child(5)  i{
+  right: 15px;
+  position: absolute;
+  top: 15px;
+}
+
+#content > div > div > form   i{
+  right: 15px;
+  position: absolute;
+  top: 15px;
+  
+}
+
+#content > div > div > form {
+  
+  text-align: -webkit-center;
+
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  
+  margin-left: 10px;
+
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* // 성별 여자 선택 */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(252, 45, 183);
+  -webkit-transition: .4s;
+  transition: .4s;
+  text-align: right;
+  padding-left: 7px;
+
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  
+
+}
+
+/* 성별 남자 선택 */
+.blue {
+  background-color: #2196F3;
+  text-align: left;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+#content > div > div > form > div > label > span {
+  
+  padding-top: 6px;
+  color: white;
+  padding-right: 6px;
+
+}
+
+
+#content > div > div > form > div:nth-child(2) > input[type=checkbox] {
+  
+  margin: 5px;
+
+}
+
+
+#dataTable_length {
+  
+  display: inline-block;
+  width: 500px;
+  text-align-last: left;
+
+  margin-bottom: 10px;
+
+}
+
+#dataTable_length > label > select{
+  
+  display: inline-block;
+  width: 80%;
+  
+  margin-left: 10px;
+
+
+}
+
+#dataTable_length > label{
+  
+  display: inline-block;
+  width: 500px;
+}
+
+
+#content > div > div > form  a {
+
+  width: 100%;
+}
+
+ /* 스위치 가운데 정렬 */
+#content > div > div > form > div:nth-child(5) {
+  place-content: center;
+
+}

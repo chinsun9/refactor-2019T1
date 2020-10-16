@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Register</title>
+
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/chinsung_register.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            <form name="userprofile" class="user"  maxlength="20" method="post" action="/web/user/register">
+                                <div class="form-group row">
+                                    <input type="text" class="form-control form-control-user" name="userId"
+                                        id="exampleFirstName" maxlength="20" placeholder="ID">
+                                </div>
+
+                                <div class="form-group row">
+                                    <input type="password"  maxlength="20" class="form-control form-control-user" name="userPw"
+                                        id="exampleFirstName" placeholder="Password">
+                                </div>
+                                <div class="form-group row">
+                                    <input type="password" maxlength="20" class="form-control form-control-user" id="exampleFirstName"
+                                        placeholder="Confirm password">
+                                </div>
+
+                                <div class="form-group row">
+                                    <input type="text"  maxlength="20" class="form-control form-control-user" name="userName"
+                                        id="exampleFirstName" placeholder="Name">
+                                </div>
+
+                                <div class="form-group row">
+                                    <input type="email" class="form-control form-control-user" name="userEmail"
+                                        id="exampleInputEmail" maxlength="30" placeholder="Email Address">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <label class="custom-control-label" for="customCheck">이메일 수신 동의</label>
+                                            <input type="hidden" name="userEmailStatus" id="myField2" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <input type="date" class="form-control form-control-user" name="userBirth"
+                                        id="exampleInputEmail" placeholder="yyyy-mm-dd 00:00:00">
+                                </div>
+                                <div class="form-group row">
+
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider">W</span>
+                                        <input type="hidden" name="userSex" id="myField" value="1">
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="dataTables_length" id="dataTable_length"><label>지역/시간 <select
+                                                name="userArea" aria-controls="dataTable"
+                                                class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="1">SEL(서울) GMT+9</option>
+                                                <option value="2">GMT/LON(런던) GMT+0</option>
+                                            </select> </label></div>
+
+                                    <a href="javascript:userprofile.submit();"
+                                        class="btn btn-primary btn-user btn-block">
+                                        Register Account
+                                    </a>
+                                </div>
+                                <hr>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a href="/web/login" class="small" href="/web/login">Already have an account?
+                                    Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="js/chinsung_profile_edit.js"></script>
+
+
+</body>
+
+</html>

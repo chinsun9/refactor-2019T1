@@ -1,0 +1,79 @@
+#sortable > div:nth-child(1){
+    position: relative;
+    width: 100%;
+    padding-right: .75rem;
+    padding-left: .75rem;
+
+    flex: 0 0 100%;
+    max-width: 100%;
+
+
+}
+
+
+.itemBox {
+  border:solid 1px black;
+  width:400px;
+  height:50px;
+  padding:10px;
+  margin-bottom:10px;
+}
+.itemBoxHighlight {
+  border:solid 1px black;
+  width:400px;
+  height:50px;
+  padding:10px;
+  margin-bottom:10px;
+  background-color:yellow;
+}
+.deleteBox {
+  float:right;
+  display:none;
+  cursor:pointer;
+}
+
+
+#sortable { list-style-type: none;
+  margin-bottom: 100px;
+}
+#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+
+#content > div > div:nth-child(3) > a{
+  max-width: 500px;
+}
+
+
+#content > div > div:nth-child(3){
+  place-content: center;
+
+}
+
+
+
+/* 모바일 화면에서 드래그 가능하게 만들기 */
+@media (max-width: 992px) {
+
+.col-lg-3 {
+  flex: 0 0 20%;
+  max-width: 50%;
+  min-width: 50%;
+  max-height: 1%;
+  min-height: 1%;
+  height: 60px;
+}
+
+.card {
+  widows: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#sortable{
+  margin-bottom: 0px;;
+}
+
+#sortable > div > div > div {
+  font-size: 10px;
+}
+
+}
