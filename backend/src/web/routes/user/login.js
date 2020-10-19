@@ -10,8 +10,6 @@ router.get('/', (req, res) => {
     return;
   }
 
-  console.log(req.session.loginMessage);
-
   res.render('chinsung_login', {
     title: 'Login',
     loginMessage: req.session.loginMessage,
