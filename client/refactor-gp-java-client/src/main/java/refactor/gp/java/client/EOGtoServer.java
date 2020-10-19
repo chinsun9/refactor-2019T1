@@ -224,7 +224,7 @@ public class EOGtoServer extends JFrame implements Runnable {
 
 		ja.setBounds(50 + minusX, 200, 500, 500);
 
-		scrollPane.setBounds(50 + minusX, 200 + minusY, 300, 300);
+		scrollPane.setBounds(50 + minusX, 200 + minusY, 250, 300);
 		jp.add(scrollPane);
 		add(jp); // JFrame에 jp라는 패널 추가
 		jp.setFocusable(true);
