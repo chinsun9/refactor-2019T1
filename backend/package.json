@@ -1,11 +1,10 @@
 {
-  "name": "mypgm",
+  "name": "refactor-gp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set NODE_ENV=skip_ganglion&& node src/Server.js",
+    "start": "set NODE_ENV=skip_ganglion&& node src/app.js",
     "prettier": "npx prettier --write ./src/web/**/*.js"
   },
   "author": "",
@@ -19,6 +18,7 @@
     "http": "0.0.0",
     "mysql": "^2.17.1",
     "request": "^2.88.0",
+    "http-errors": "^1.8.0",
     "sync-mysql": "^3.0.1"
   }
 }
