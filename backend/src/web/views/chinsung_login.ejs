@@ -45,7 +45,11 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">"Welcome Back!"</h1>
+                    <p style="
+                    margin: 0;
+                    color: red;
+                "><%= locals.loginMessage ? loginMessage : loginMessage %></p>
                   </div>
                   <form name="userprofile" class="user" method="post" action="/web/login">
                     <div class="form-group">

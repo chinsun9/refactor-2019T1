@@ -4,42 +4,35 @@ const router = express.Router();
 const client = require('../../utils/mysql');
 
 router.get('/', (req, res) => {
+  // 이미 로그인한 경우
   if (req.session.userNum) {
     res.redirect('/web/main/index');
     return;
   }
 
+  console.log(req.session.loginMessage);
+
   res.render('chinsung_login', {
     title: 'Login',
+    loginMessage: req.session.loginMessage,
   });
 });
 
 router.post('/', (req, res) => {
-  var userId = req.body.userId;
-  var userPw = req.body.userPw;
-
-  var user = '';
-
-  // 리퀘스트에서 아이피 가져오기
-  //var userIP = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-  //console.log(userIP)
+  const { userId, userPw } = req.body;
 
   const query =
     'select userNum from luciddb.USER where userId = ? and userPw = ?';
   const queryArgs = [userId, userPw];
-  var results = client.query(query, queryArgs);
+  const results = client.query(query, queryArgs);
 
-  console.log(results);
-
-  results.forEach((item, index) => {
-    user = item.userNum;
-  });
-
-  if (user != '') {
-    req.session.userNum = user;
+  if (results.length !== 0) {
+    req.session.userNum = results[0].userNum;
+    req.session.loginMessage = '';
 
     res.redirect('/web/main/index');
   } else {
+    req.session.loginMessage = 'Login Failed';
     res.redirect('/web/login');
   }
 });
