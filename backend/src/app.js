@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const weblogin = require('./web/routes/user/login.js');
-const webIndex = require('./web/routes/test.js');
+const webIndex = require('./web/routes/index.js');
 const webregister = require('./web/routes/user/register.js');
 const weblogout = require('./web/routes/user/logout.js');
 const webMain = require('./web/routes/main/index.js');
