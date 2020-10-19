@@ -19,12 +19,7 @@ var myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 // 웹 편집 위해 빠른 로그인 없이 보이기
 router.get('/', (req, res) => {
   if (typeof req.session.userNum == 'undefined') {
-    console.log(new Date() + '] 쿠키없는 접근');
-
-    res.render('chinsung_404.ejs', {
-      msg: 'Session expiration',
-    });
-    return;
+    throw new Error('no session');
   }
 
   let myResults = '';

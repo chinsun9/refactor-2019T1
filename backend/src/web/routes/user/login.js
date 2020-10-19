@@ -24,13 +24,12 @@ router.post('/', (req, res) => {
   //var userIP = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
   //console.log(userIP)
 
-  var results = client.query(
-    'select userNum from luciddb.USER where userId = "' +
-      userId +
-      '" and userPw = "' +
-      userPw +
-      '"'
-  );
+  const query =
+    'select userNum from luciddb.USER where userId = ? and userPw = ?';
+  const queryArgs = [userId, userPw];
+  var results = client.query(query, queryArgs);
+
+  console.log(results);
 
   results.forEach((item, index) => {
     user = item.userNum;
