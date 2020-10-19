@@ -25,9 +25,9 @@ router.get('/', (req, res) => {
   }
 
   let myResults = '';
-  myResults = client.query(
-    'select * from SERVICEEOGORDER where userNum=' + req.session.userNum
-  );
+  myResults = client.query('select * from SERVICEEOGORDER where userNum= ?', [
+    req.session.userNum,
+  ]);
 
   myResults.forEach((item, index) => {
     myStringOrder[0] = item.lieTimeService;
@@ -44,9 +44,9 @@ router.get('/', (req, res) => {
   console.log(myStringOrder.toString());
 
   let tempName = '';
-  myResults = client.query(
-    'select * from USER where userNum = ' + req.session.userNum
-  );
+  myResults = client.query('select * from USER where userNum = ?', [
+    req.session.userNum,
+  ]);
   myResults.forEach((item, index) => {
     tempName = item.userName;
   });
@@ -62,32 +62,21 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   serviceOrder = req.body.arr;
   console.log(serviceOrder);
-  let myResults = client.query(
-    'delete from SERVICEEOGORDER where userNum = ' + req.session.userNum
-  );
-  myResults = client.query(
-    'insert into SERVICEEOGORDER values (' +
-      req.session.userNum +
-      ', ' +
-      serviceOrder[0] +
-      ', ' +
-      serviceOrder[1] +
-      ', ' +
-      serviceOrder[2] +
-      ', ' +
-      serviceOrder[3] +
-      ', ' +
-      serviceOrder[4] +
-      ', ' +
-      serviceOrder[5] +
-      ', ' +
-      serviceOrder[6] +
-      ', ' +
-      serviceOrder[7] +
-      ', ' +
-      serviceOrder[8] +
-      ')'
-  );
+  client.query('delete from SERVICEEOGORDER where userNum = ?', [
+    req.session.userNum,
+  ]);
+  client.query('insert into SERVICEEOGORDER values (?,?,?,?,?,?,?,?,?,?)', [
+    req.session.userNum,
+    serviceOrder[0],
+    serviceOrder[1],
+    serviceOrder[2],
+    serviceOrder[3],
+    serviceOrder[4],
+    serviceOrder[5],
+    serviceOrder[6],
+    serviceOrder[7],
+    serviceOrder[8],
+  ]);
 
   //디비에 배열 저장!
 

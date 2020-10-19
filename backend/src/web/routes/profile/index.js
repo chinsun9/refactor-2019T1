@@ -16,10 +16,9 @@ function date_to_str(format) {
 router.use(chk_session);
 
 router.get('/', (req, res) => {
-  const results = client.query(
-    'select * from USER where userNum = ' + req.session.userNum
-  );
-  // console.log(results[0]);
+  const results = client.query('select * from USER where userNum = ?', [
+    req.session.userNum,
+  ]);
 
   let userId = '';
   let userPw = '';
@@ -42,7 +41,8 @@ router.get('/', (req, res) => {
   });
 
   let sleepResult2 = client.query(
-    'select * from LOGINEOGFP1 where userNum = ' + req.session.userNum
+    'select * from LOGINEOGFP1 where userNum = ?',
+    [req.session.userNum]
   );
 
   let ddata9 = 0; //되냐
@@ -52,12 +52,12 @@ router.get('/', (req, res) => {
   });
 
   let dateTest = new Date(userBirth);
-  console.log('디비에서 가져온 원본 날짜 :' + dateTest);
-  console.log('디비에서 가져온 원본 날짜+ :' + date_to_str(dateTest));
+  console.info('디비에서 가져온 원본 날짜 :' + dateTest);
+  console.info('디비에서 가져온 원본 날짜+ :' + date_to_str(dateTest));
 
   userBirth = date_to_str(dateTest);
 
-  console.log('웹에 보내지는 날짜 :' + userBirth);
+  console.info('웹에 보내지는 날짜 :' + userBirth);
 
   res.render('chinsung_profile_edit', {
     title: 'Profile_edit',
@@ -75,38 +75,26 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log(
-    'update USER set userName = "' +
-      req.body.userName +
-      '", userEmail = "' +
-      req.body.userEmail +
-      '", userEmailStatus = "' +
-      req.body.userEmailStatus +
-      '", userBirth = "' +
-      req.body.userBirth +
-      '", userSex = ' +
-      req.body.userSex +
-      ', userArea = ' +
-      req.body.userArea +
-      ' where userNum = ' +
-      req.session.userNum
-  );
+  const {
+    userName,
+    userEmail,
+    userEmailStatus,
+    userBirth,
+    userSex,
+    userArea,
+  } = req.body;
 
   client.query(
-    'UPDATE luciddb.USER SET userName = "' +
-      req.body.userName +
-      '", userEmail = "' +
-      req.body.userEmail +
-      '", userEmailStatus = "' +
-      req.body.userEmailStatus +
-      '", userBirth = "' +
-      req.body.userBirth +
-      '", userSex = ' +
-      req.body.userSex +
-      ', userArea = ' +
-      req.body.userArea +
-      ' where userNum = ' +
-      req.session.userNum
+    'UPDATE luciddb.USER SET userName = ?, userEmail = ? , userEmailStatus = ? , userBirth = ? , userSex = ? , userArea = ? where userNum = ?',
+    [
+      userName,
+      userEmail,
+      userEmailStatus,
+      userBirth,
+      userSex,
+      userArea,
+      req.session.userNum,
+    ]
   );
 
   res.redirect('/web/main/index');
