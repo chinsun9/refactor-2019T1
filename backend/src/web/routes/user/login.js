@@ -4,6 +4,11 @@ const router = express.Router();
 const client = require('../../utils/mysql');
 
 router.get('/', (req, res) => {
+  if (req.session.userNum) {
+    res.redirect('/web/main/index');
+    return;
+  }
+
   res.render('chinsung_login', {
     title: 'Login',
   });
