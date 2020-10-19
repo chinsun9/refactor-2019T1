@@ -56,7 +56,7 @@ public class EOGtoServer extends JFrame implements Runnable {
 	static public boolean firstRegister = false;
 	static public boolean setLogin = false;
 	static public boolean judgeRegister = false;
-	static JButton jb = new JButton("", new ImageIcon("btnReg.png")); // 회원가입 버튼
+	static JButton jb = new JButton("", new ImageIcon("resources/btnReg.png")); // 회원가입 버튼
 
 	static String msg = "서버 통신 준비";
 
@@ -91,13 +91,13 @@ public class EOGtoServer extends JFrame implements Runnable {
 
 	JPanel jp = new JPanel() {
 		public void paintComponent(Graphics g) {
-			g.drawImage(new ImageIcon("back2.png").getImage(), 0, 0, null);
+			g.drawImage(new ImageIcon("resources/back2.png").getImage(), 0, 0, null);
 			setOpaque(false); // 그림을 표시하게 설정,투명하게 조절
 			super.paintComponent(g);
 		}
 	};
 
-	JButton jb_out = new JButton("", new ImageIcon("btnLogout.png")); // 로그 아웃 버튼 초기화
+	JButton jb_out = new JButton("", new ImageIcon("resources/btnLogout.png")); // 로그 아웃 버튼 초기화
 //	JButton jb_changeIP = new JButton("", new ImageIcon("btn_apply.png")); // 로그 아웃 버튼 초기화
 	static JTextArea jl = new JTextArea(SERVER_IP);
 	static JTextArea ja = new JTextArea("로그인 요청중");
@@ -112,7 +112,7 @@ public class EOGtoServer extends JFrame implements Runnable {
 					urls = "http://" + SERVER_IP + ":65002/ganglion/index";
 					ja.setText(ja.getText() + "\n회원가입 요청..");
 //                    jb.setText("토큰 복사");
-					jb.setIcon(new ImageIcon("btnCopyT.png"));
+					jb.setIcon(new ImageIcon("resources/btnCopyT.png"));
 					judgeRegister = true;
 				} else {
 					Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -194,7 +194,7 @@ public class EOGtoServer extends JFrame implements Runnable {
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("userNum", userNum);
 				urls = "http://" + SERVER_IP + ":65002/ganglion/logintest";
-				jb.setIcon(new ImageIcon("btnReg.png"));
+				jb.setIcon(new ImageIcon("resources/btnReg.png"));
 				post(urls, jsonObject.toJSONString());
 
 			}
@@ -480,7 +480,7 @@ public class EOGtoServer extends JFrame implements Runnable {
 					ja.setText(ja.getText() + "\n 회원가입 완료!\n로그인 요청으로 전환합니다.\n로그인 시도중..");
 					token = "";
 //                    jb.setText("회원가입");
-					jb.setIcon(new ImageIcon("btnReg.png"));
+					jb.setIcon(new ImageIcon("resources/btnReg.png"));
 					judgeRegister = false;
 					urls = "http://" + SERVER_IP + ":65002/ganglion/login";
 				} else if (sb.toString().equals("5\n")) {
