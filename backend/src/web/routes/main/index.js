@@ -25,7 +25,7 @@ function sleepService(req, callback) {
   let stage34Time = [];
 
   let sleepResult = client.query(
-    'select * from SERVICEEOG where userNum = ' + req.cookies.userNum
+    'select * from SERVICEEOG where userNum = ' + req.session.userNum
   );
 
   sleepResult.forEach((item, index) => {
@@ -194,7 +194,7 @@ function sleepService(req, callback) {
 
 // 웹 편집 위해 빠른 로그인 없이 보이기
 router.get('/', (req, res) => {
-  if (typeof req.cookies.userNum == 'undefined') {
+  if (typeof req.session.userNum == 'undefined') {
     console.log(new Date() + '] 쿠키없는 접근');
 
     res.render('chinsung_404.ejs', {
@@ -204,14 +204,14 @@ router.get('/', (req, res) => {
   }
 
   let myResults = client.query(
-    'select * from USER where userNum = ' + req.cookies.userNum
+    'select * from USER where userNum = ' + req.session.userNum
   );
   myResults.forEach((item, index) => {
     userName = item.userName;
   });
 
   myResults = client.query(
-    'select * from SERVICEEOGORDER where userNum=' + req.cookies.userNum
+    'select * from SERVICEEOGORDER where userNum=' + req.session.userNum
   );
 
   myResults.forEach((item, index) => {
@@ -227,7 +227,7 @@ router.get('/', (req, res) => {
   });
 
   let sleepResult2 = client.query(
-    'select * from LOGINEOGFP1 where userNum = ' + req.cookies.userNum
+    'select * from LOGINEOGFP1 where userNum = ' + req.session.userNum
   );
 
   let ddata9 = 0; //되냐

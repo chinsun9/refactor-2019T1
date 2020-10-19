@@ -8,7 +8,7 @@ const client = require('../../utils/mysql');
 // 아웃풋 ; 수정완료 ; 기존비번, 새비번, 새비번2
 
 router.get('/', (req, res) => {
-  if (typeof req.cookies.userNum == 'undefined') {
+  if (typeof req.session.userNum == 'undefined') {
     console.log(new Date() + '] 쿠키없는 접근');
 
     res.render('chinsung_404.ejs', {
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
   }
 
   var results = client.query(
-    'select * from USER where userNum = ' + req.cookies.userNum
+    'select * from USER where userNum = ' + req.session.userNum
   );
   // console.log(results[0]);
 
@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
   console.log(token1);
   console.log(token2);
 
-  fs.writeFile('data.txt', token + ' ' + req.cookies.userNum, 'utf8', (err) => {
+  fs.writeFile('data.txt', token + ' ' + req.session.userNum, 'utf8', (err) => {
     console.log(err);
     res.redirect('/web/main/index');
   });

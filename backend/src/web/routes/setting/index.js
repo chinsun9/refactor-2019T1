@@ -18,7 +18,7 @@ var myString = [
 var myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 // 웹 편집 위해 빠른 로그인 없이 보이기
 router.get('/', (req, res) => {
-  if (typeof req.cookies.userNum == 'undefined') {
+  if (typeof req.session.userNum == 'undefined') {
     console.log(new Date() + '] 쿠키없는 접근');
 
     res.render('chinsung_404.ejs', {
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 
   let myResults = '';
   myResults = client.query(
-    'select * from SERVICEEOGORDER where userNum=' + req.cookies.userNum
+    'select * from SERVICEEOGORDER where userNum=' + req.session.userNum
   );
 
   myResults.forEach((item, index) => {
@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
 
   let tempName = '';
   myResults = client.query(
-    'select * from USER where userNum = ' + req.cookies.userNum
+    'select * from USER where userNum = ' + req.session.userNum
   );
   myResults.forEach((item, index) => {
     tempName = item.userName;
@@ -66,11 +66,11 @@ router.post('/', (req, res) => {
   serviceOrder = req.body.arr;
   console.log(serviceOrder);
   let myResults = client.query(
-    'delete from SERVICEEOGORDER where userNum = ' + req.cookies.userNum
+    'delete from SERVICEEOGORDER where userNum = ' + req.session.userNum
   );
   myResults = client.query(
     'insert into SERVICEEOGORDER values (' +
-      req.cookies.userNum +
+      req.session.userNum +
       ', ' +
       serviceOrder[0] +
       ', ' +

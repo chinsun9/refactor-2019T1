@@ -5,7 +5,7 @@ const router = express.Router();
 const client = require('../../utils/mysql');
 
 router.get('/', (req, res) => {
-  if (typeof req.cookies.userNum == 'undefined') {
+  if (typeof req.session.userNum == 'undefined') {
     console.log(new Date() + '] 쿠키없는 접근');
 
     res.render('chinsung_404.ejs', {
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
   }
 
   var results = client.query(
-    'select * from USER where userNum = ' + req.cookies.userNum
+    'select * from USER where userNum = ' + req.session.userNum
   );
 
   var userName = '';
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 
   console.log(token);
 
-  fs.writeFile('data.txt', token + ' ' + req.cookies.userNum, 'utf8', (err) => {
+  fs.writeFile('data.txt', token + ' ' + req.session.userNum, 'utf8', (err) => {
     console.log(err);
     res.redirect('/web/main/index');
   });

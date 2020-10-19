@@ -13,7 +13,7 @@ function date_to_str(format) {
 }
 
 router.get('/', (req, res) => {
-  if (typeof req.cookies.userNum == 'undefined') {
+  if (typeof req.session.userNum == 'undefined') {
     console.log(new Date() + '] 쿠키없는 접근');
 
     res.render('chinsung_404.ejs', {
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
   }
 
   var results = client.query(
-    'select * from USER where userNum = ' + req.cookies.userNum
+    'select * from USER where userNum = ' + req.session.userNum
   );
   // console.log(results[0]);
 
@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
   });
 
   let sleepResult2 = client.query(
-    'select * from LOGINEOGFP1 where userNum = ' + req.cookies.userNum
+    'select * from LOGINEOGFP1 where userNum = ' + req.session.userNum
   );
 
   let ddata9 = 0; //되냐
@@ -112,7 +112,7 @@ router.post('/', (req, res) => {
       ', userArea = ' +
       req.body.userArea +
       ' where userNum = ' +
-      req.cookies.userNum
+      req.session.userNum
   );
   var results = client.query(
     'UPDATE luciddb.USER SET userName = "' +
@@ -128,7 +128,7 @@ router.post('/', (req, res) => {
       ', userArea = ' +
       req.body.userArea +
       ' where userNum = ' +
-      req.cookies.userNum
+      req.session.userNum
   );
 
   res.redirect('/web/main/index');

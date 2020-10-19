@@ -32,7 +32,8 @@ router.post('/', (req, res) => {
   });
 
   if (user != '') {
-    res.cookie('userNum', user);
+    req.session.userNum = user;
+
     res.redirect('/web/main/index');
   } else {
     res.redirect('/web/login');
