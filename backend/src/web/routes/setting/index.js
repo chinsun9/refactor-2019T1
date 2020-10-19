@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
 const client = require('../../utils/mysql');
+const chk_session = require('../../utils/chk-session');
 
-var serviceOrder = new Array();
-var myString = [
+let serviceOrder = new Array();
+const myString = [
   'lieTimeService',
   'getSleepTimeService',
   'wakeUpTimeService',
@@ -15,8 +15,10 @@ var myString = [
   'sleepEfficiencyService',
   'dailySleepTimeService',
 ];
-var myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-// 웹 편집 위해 빠른 로그인 없이 보이기
+let myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+router.use(chk_session);
+
 router.get('/', (req, res) => {
   if (typeof req.session.userNum == 'undefined') {
     throw new Error('no session');

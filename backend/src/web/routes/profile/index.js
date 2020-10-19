@@ -1,35 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const client = require('../../utils/mysql');
+const chk_session = require('../../utils/chk-session');
 
 function date_to_str(format) {
-  var year = format.getFullYear();
-  var month = format.getMonth() + 1;
+  const year = format.getFullYear();
+  let month = format.getMonth() + 1;
   if (month < 10) month = '0' + month;
-  var date = format.getDate();
+  let date = format.getDate();
   if (date < 10) date = '0' + date;
 
   return year + '-' + month + '-' + date;
 }
 
-router.get('/', (req, res) => {
-  if (typeof req.session.userNum == 'undefined') {
-    throw new Error('no session');
-  }
+router.use(chk_session);
 
-  var results = client.query(
+router.get('/', (req, res) => {
+  const results = client.query(
     'select * from USER where userNum = ' + req.session.userNum
   );
   // console.log(results[0]);
 
-  var userId = '';
-  var userPw = '';
-  var userName = '';
-  var userEmail = '';
-  var userEmailStatus = 0;
-  var userBirth = '';
-  var userSex = 0;
-  var userArea = 0;
+  let userId = '';
+  let userPw = '';
+  let userName = '';
+  let userEmail = '';
+  let userEmailStatus = 0;
+  let userBirth = '';
+  let userSex = 0;
+  let userArea = 0;
 
   results.forEach((item, index) => {
     userId = item.userId;
@@ -52,7 +51,7 @@ router.get('/', (req, res) => {
     ddata9 = item.userNum;
   });
 
-  var dateTest = new Date(userBirth);
+  let dateTest = new Date(userBirth);
   console.log('디비에서 가져온 원본 날짜 :' + dateTest);
   console.log('디비에서 가져온 원본 날짜+ :' + date_to_str(dateTest));
 
@@ -76,23 +75,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  var userId = req.body.userId;
-  var userPw = req.body.userPw;
-  console.log(req.body);
-  var user = '';
-
-  var results = client.query(
-    'select userNum from luciddb.USER where userId = "' +
-      userId +
-      '" and userPw = "' +
-      userPw +
-      '"'
-  );
-
-  results.forEach((item, index) => {
-    user = item.userNum;
-  });
-
   console.log(
     'update USER set userName = "' +
       req.body.userName +
@@ -109,7 +91,8 @@ router.post('/', (req, res) => {
       ' where userNum = ' +
       req.session.userNum
   );
-  var results = client.query(
+
+  client.query(
     'UPDATE luciddb.USER SET userName = "' +
       req.body.userName +
       '", userEmail = "' +

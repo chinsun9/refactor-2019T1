@@ -3,17 +3,16 @@ const express = require('express');
 const router = express.Router();
 
 const client = require('../../utils/mysql');
+const chk_session = require('../../utils/chk-session');
+
+router.use(chk_session);
 
 router.get('/', (req, res) => {
-  if (typeof req.session.userNum == 'undefined') {
-    throw new Error('no session');
-  }
-
-  var results = client.query(
+  const results = client.query(
     'select * from USER where userNum = ' + req.session.userNum
   );
 
-  var userName = '';
+  let userName = '';
 
   results.forEach((item, index) => {
     userName = item.userName;
@@ -26,7 +25,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  var token = req.body.token;
+  const token = req.body.token;
 
   console.log(token);
 

@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const client = require('../../utils/mysql');
+const chk_session = require('../../utils/chk-session');
 
 //필요한 값
 //사용자명
 //사용자 카드 순서
 //각 카드 데이터 인덱스, 통계명, 라벨, 데이터
-var userName = '';
-var myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+let userName = '';
+let myStringOrder = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-var dataArr = [];
+let dataArr = [];
 
 //데이터 넣는 작업
 function sleepService(req, callback) {
@@ -51,7 +52,7 @@ function sleepService(req, callback) {
 
   serviceTime.forEach((item, index) => {
     item = new Date(item);
-    var chsTemp = item.getMonth() + 1;
+    let chsTemp = item.getMonth() + 1;
     dlabel[index] = item.getFullYear() + '-' + chsTemp + '-' + item.getDate();
   });
 
@@ -105,7 +106,7 @@ function sleepService(req, callback) {
     ddata7[index] = (ddata5[index] / (ddata4[index] + ddata5[index])) * 100;
   });
 
-  var dataObject = {
+  let dataObject = {
     dindex: 0,
     dname: '누운시간',
     dlabel: dlabel,
@@ -192,46 +193,44 @@ function sleepService(req, callback) {
 //메인에서 필요한 정보
 // 카드 순서 정보, 알림, 사용자 정보
 
-// 웹 편집 위해 빠른 로그인 없이 보이기
+router.use(chk_session);
 router.get('/', (req, res) => {
-  if (typeof req.session.userNum == 'undefined') {
-    throw new Error('no session');
+  let myResults = client.query('select * from USER where userNum = ?', [
+    req.session.userNum,
+  ]);
+
+  if (myResults.length === 0) {
+    throw new Error('no user');
   }
 
-  let myResults = client.query(
-    'select * from USER where userNum = ' + req.session.userNum
-  );
-  myResults.forEach((item, index) => {
-    userName = item.userName;
-  });
+  userName = myResults[0].userName;
 
-  myResults = client.query(
-    'select * from SERVICEEOGORDER where userNum=' + req.session.userNum
-  );
+  myResults = client.query('select * from SERVICEEOGORDER where userNum = ?', [
+    req.session.userNum,
+  ]);
 
-  myResults.forEach((item, index) => {
-    myStringOrder[0] = item.lieTimeService;
-    myStringOrder[1] = item.getSleepTimeService;
-    myStringOrder[2] = item.wakeUpTimeService;
-    myStringOrder[3] = item.remSleepService;
-    myStringOrder[4] = item.stage12SleepService;
-    myStringOrder[5] = item.stage34SleepService;
-    myStringOrder[6] = item.totalSleepTimeService;
-    myStringOrder[7] = item.sleepEffciencyService;
-    myStringOrder[8] = item.dailySleepTimeService;
-  });
+  myStringOrder[0] = myResults[0].lieTimeService;
+  myStringOrder[1] = myResults[0].getSleepTimeService;
+  myStringOrder[2] = myResults[0].wakeUpTimeService;
+  myStringOrder[3] = myResults[0].remSleepService;
+  myStringOrder[4] = myResults[0].stage12SleepService;
+  myStringOrder[5] = myResults[0].stage34SleepService;
+  myStringOrder[6] = myResults[0].totalSleepTimeService;
+  myStringOrder[7] = myResults[0].sleepEffciencyService;
+  myStringOrder[8] = myResults[0].dailySleepTimeService;
 
-  let sleepResult2 = client.query(
-    'select * from LOGINEOGFP1 where userNum = ' + req.session.userNum
+  const sleepResult2 = client.query(
+    'select * from LOGINEOGFP1 where userNum = ?',
+    [req.session.userNum]
   );
 
-  let ddata9 = 0; //되냐
+  let ddata9 = 0;
 
   sleepResult2.forEach((item, index) => {
     ddata9 = item.userNum;
   });
 
-  sleepService(req, (dataArr) => {
+  sleepService(req, () => {
     console.log(myStringOrder);
     res.render('chinsung_main.ejs', {
       title: 'Main',

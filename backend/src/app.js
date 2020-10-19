@@ -12,11 +12,11 @@ const webregister = require('./web/routes/user/register.js');
 const weblogout = require('./web/routes/user/logout.js');
 const webMain = require('./web/routes/main/index.js');
 const webProfile = require('./web/routes/profile/index.js');
+const webPwChange = require('./web/routes/profile/change.js');
 const webRegisterEOG = require('./web/routes/profile/register.js');
 const webAbout = require('./web/routes/about/index.js');
 const webTool = require('./web/routes/about/tool.js');
 const webSetting = require('./web/routes/setting/index.js');
-const webPwChange = require('./web/routes/profile/change.js');
 
 // 데탑에서 갱글리온 관련 라우터를 못돌리는 문제
 if (process.env.NODE_ENV !== 'skip_ganglion') {
